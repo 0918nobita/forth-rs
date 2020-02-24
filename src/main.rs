@@ -10,6 +10,7 @@ fn main() {
     let mut context = context::Context {
         dict: &mut HashMap::new(),
         stack: &mut Vec::new(),
+        mem: &mut Vec::with_capacity(1000),
     };
 
     context
