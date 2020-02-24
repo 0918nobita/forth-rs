@@ -54,6 +54,11 @@ pub fn interpret(ctx: &mut Context, word: String) {
         return;
     }
 
+    if word == "drop" {
+        ctx.stack.pop().expect("Stack underflow (drop)");
+        return;
+    }
+
     if word == "bye" {
         std::process::exit(0)
     }
