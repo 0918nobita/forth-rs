@@ -10,14 +10,8 @@ codes: db '0123456789ABCDEF'
 section .text
 start:
   ; 出力したい数値を格納
-  mov rax, 13
-
-  ; 1st arg of write syscall (descriptor = stdout)
-  mov rdi, 1
-  ; 2nd arg of write syscall (count = 1)
-  mov rdx, 1
-
-  mov cl, 8 ; bit count
+  mov rax, 0x1122334455667788
+  mov cl, 64 ; bit count
 
 .loop:
   ; 16 進数表記での 1 桁 (4 bit) ずつ処理していく
@@ -28,9 +22,14 @@ start:
   and rax, 0xf
 
   lea rbx, [rel codes]
+  ; 2nd arg of write syscall (string address = codes + rax)
   lea rsi, [rbx + rax]
   mov rax, 0x2000004  ; write
   push rcx
+  ; 1st arg of write syscall (descriptor = stdout)
+  mov rdi, 1
+  ; 3rd arg of write syscall (count = 1)
+  mov rdx, 1
   syscall
   pop rcx
 
